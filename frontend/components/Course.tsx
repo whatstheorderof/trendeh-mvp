@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlayCircle, ArrowRight, CheckCircle2, BookOpen, Target, Users, Search, DollarSign, Rocket, FileText, MessageSquare, Loader2 } from 'lucide-react';
+import { ArrowRight, CheckCircle2, BookOpen, Target, Users, Search, DollarSign, Rocket, FileText, MessageSquare, Loader2, PenTool, Palette } from 'lucide-react';
 import { Idea, DetailedRoadmap } from '../types';
 import { generateIdeaRoadmap } from '../services/geminiService';
 
@@ -47,24 +47,6 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
         <p className="text-gray-500 text-xl max-w-2xl">
           Seven stages. Each one's output feeds the next. End result: a signed $10K proposal.
         </p>
-      </div>
-
-      {/* Video Player Placeholder */}
-      <div className="w-full aspect-video bg-gray-900 rounded-[2rem] mb-16 relative overflow-hidden shadow-2xl group cursor-pointer">
-        <img 
-          src="https://picsum.photos/1200/675?random=1" 
-          alt="Course Video Thumbnail" 
-          className="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity duration-500"
-        />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-            <PlayCircle className="w-10 h-10 text-white fill-white/20" />
-          </div>
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
-          <h3 className="text-white font-bold text-2xl">Stage 2: Finding the Opportunity</h3>
-          <p className="text-gray-300 mt-2">21:19 • The Complete 7-Stage System</p>
-        </div>
       </div>
 
       {/* Flowchart / Stepper */}
@@ -218,6 +200,66 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                         <div className="text-sm font-bold text-gray-800">{chapter}</div>
                       </div>
                     ))}
+                  </div>
+                </div>
+
+                {/* Bonus: PDF Generation Guide */}
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl"><PenTool className="w-5 h-5" /></div>
+                    <h4 className="font-bold text-lg text-gray-900">Bonus: PDF Generation Guide</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Content Structure</div>
+                      <ul className="list-decimal list-inside text-sm text-gray-700 space-y-1">
+                        {roadmap.pdfGenerationGuide.structure.map((s, i) => <li key={i}>{s}</li>)}
+                      </ul>
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mt-4 mb-2">Recommended Tools</div>
+                      <div className="flex gap-2 flex-wrap">
+                        {roadmap.pdfGenerationGuide.toolRecommendations.map((t, i) => <span key={i} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-lg text-xs font-bold">{t}</span>)}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">AI Master Prompt</div>
+                      <div className="bg-gray-900 p-4 rounded-xl border border-gray-800 text-gray-300 text-sm font-mono h-full whitespace-pre-wrap">
+                        {roadmap.pdfGenerationGuide.writingPrompt}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Bonus: Cover Design Guide */}
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2.5 bg-rose-50 text-rose-600 rounded-xl"><Palette className="w-5 h-5" /></div>
+                    <h4 className="font-bold text-lg text-gray-900">Bonus: Cover Design Guide</h4>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2">
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Visual Concept</div>
+                      <p className="text-sm text-gray-800 mb-4">{roadmap.pdfCoverGuide.visualConcept}</p>
+                      
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Canva Search Keywords</div>
+                      <div className="flex gap-2 flex-wrap">
+                        {roadmap.pdfCoverGuide.canvaKeywords.map((k, i) => <span key={i} className="px-3 py-1 bg-rose-50 text-rose-700 rounded-lg text-xs font-bold">{k}</span>)}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Typography</div>
+                      <div className="bg-gray-50 p-3 rounded-xl border border-gray-100 text-gray-800 text-sm font-medium mb-4">
+                        {roadmap.pdfCoverGuide.fontPairing}
+                      </div>
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Color Palette</div>
+                      <div className="flex gap-2 flex-wrap">
+                        {roadmap.pdfCoverGuide.colorPalette.map((c, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-gray-50 px-2 py-1 rounded-lg border border-gray-100">
+                            <div className="w-4 h-4 rounded-full border border-gray-200" style={{ backgroundColor: c.startsWith('#') ? c : undefined }}></div>
+                            <span className="text-xs font-medium text-gray-700">{c}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
