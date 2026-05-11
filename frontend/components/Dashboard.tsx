@@ -119,7 +119,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ savedIdeas, onNavigate, on
                     <button 
                       onClick={() => onApplyToCourse(idea)}
                       className="p-2.5 bg-gray-50 text-gray-600 rounded-xl hover:bg-gray-900 hover:text-white transition-colors"
-                      title="Apply to 10K Stack"
+                      title="Apply to PDF Pipeline"
                     >
                       <GraduationCap className="w-5 h-5" />
                     </button>
@@ -141,8 +141,8 @@ export const Dashboard: React.FC<DashboardProps> = ({ savedIdeas, onNavigate, on
           <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2rem] p-8 text-white shadow-xl relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
             <GraduationCap className="w-10 h-10 text-pink-400 mb-6" />
-            <h4 className="text-2xl font-bold mb-3">The First $10K Stack</h4>
-            <p className="text-gray-300 mb-8 leading-relaxed">Learn the exact 7-stage system to turn your generated PDF ideas into a signed $10K proposal.</p>
+            <h4 className="text-2xl font-bold mb-3">The PDF Pipeline</h4>
+            <p className="text-gray-300 mb-8 leading-relaxed">Learn the exact 7-stage system to turn your generated PDF ideas into a ready-to-launch PDF product.</p>
             <button 
               onClick={() => onNavigate('course')}
               className="w-full py-3 bg-white text-gray-900 rounded-xl font-bold hover:bg-gray-50 transition-colors"
