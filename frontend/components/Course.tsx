@@ -111,9 +111,9 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 <p className="text-gray-500">Our AI is building a custom 7-stage execution plan for your idea.</p>
               </div>
             ) : roadmap ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:grid-cols-1 print:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:block print:space-y-8">
                 {/* Stage 1 */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-blue-50 text-blue-600 rounded-xl print:bg-transparent print:p-0"><Users className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">01. Niche Research</h4>
@@ -133,7 +133,7 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Stage 2 */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-emerald-50 text-emerald-600 rounded-xl print:bg-transparent print:p-0"><Target className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">02. Opportunity</h4>
@@ -151,7 +151,7 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Stage 3 */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-purple-50 text-purple-600 rounded-xl print:bg-transparent print:p-0"><Search className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">03. Outreach</h4>
@@ -173,7 +173,7 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Stage 4 */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-amber-50 text-amber-600 rounded-xl print:bg-transparent print:p-0"><MessageSquare className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">04. Discovery</h4>
@@ -195,12 +195,12 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Stage 5 */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2 print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2 print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-pink-50 text-pink-600 rounded-xl print:bg-transparent print:p-0"><FileText className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">05. Blueprint (Product Outline)</h4>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 print:grid-cols-2">
                     {roadmap.blueprint.chapters.map((chapter, i) => (
                       <div key={i} className="bg-gray-50 p-4 rounded-xl border border-gray-100 print:bg-transparent print:border-gray-200">
                         <div className="text-pink-500 font-black text-xl mb-1 print:text-black">{(i+1).toString().padStart(2, '0')}</div>
@@ -211,12 +211,12 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Bonus: PDF Generation Guide */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2 print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2 print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-indigo-50 text-indigo-600 rounded-xl print:bg-transparent print:p-0"><PenTool className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">Bonus: PDF Generation Guide</h4>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 print:grid-cols-2">
                     <div>
                       <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 print:text-gray-600">Content Structure</div>
                       <ul className="list-decimal list-inside text-sm text-gray-700 space-y-1 print:text-black">
@@ -237,13 +237,13 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Bonus: Cover Design Guide */}
-                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2 print:border-gray-300 print:shadow-none print:break-inside-avoid">
+                <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm md:col-span-2 print:border-gray-300 print:shadow-none print:break-inside-avoid print:mb-6">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="p-2.5 bg-rose-50 text-rose-600 rounded-xl print:bg-transparent print:p-0"><Palette className="w-5 h-5 print:text-black" /></div>
                     <h4 className="font-bold text-lg text-gray-900 print:text-black">Bonus: Cover Design Guide</h4>
                   </div>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="md:col-span-2">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 print:grid-cols-2">
+                    <div className="md:col-span-2 print:col-span-1">
                       <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 print:text-gray-600">Visual Concept</div>
                       <p className="text-sm text-gray-800 mb-4 print:text-black">{roadmap.pdfCoverGuide.visualConcept}</p>
                       
@@ -271,9 +271,9 @@ export const Course: React.FC<CourseProps> = ({ selectedIdea, onSelectIdea }) =>
                 </div>
 
                 {/* Stage 6 & 7 */}
-                <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl p-8 shadow-xl md:col-span-2 text-white relative overflow-hidden print:bg-none print:bg-white print:border-gray-300 print:shadow-none print:text-black print:break-inside-avoid">
+                <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-800 rounded-2xl p-8 shadow-xl md:col-span-2 text-white relative overflow-hidden print:bg-none print:bg-white print:border-gray-300 print:shadow-none print:text-black print:break-inside-avoid print:mb-6">
                   <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-20 -mt-20 print:hidden"></div>
-                  <div className="relative z-10 flex flex-col md:flex-row gap-8">
+                  <div className="relative z-10 flex flex-col md:flex-row gap-8 print:flex-row">
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-6">
                         <div className="p-2.5 bg-white/10 text-white rounded-xl print:bg-transparent print:p-0"><DollarSign className="w-5 h-5 print:text-black" /></div>
