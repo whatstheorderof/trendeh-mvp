@@ -1,0 +1,94 @@
+import { Idea } from './types';
+
+export const NICHES = [
+  'AI + Career',
+  'Mental Health / Nervous System',
+  'Men\'s Self Improvement',
+  'Luxury / Aesthetic Lifestyle',
+  'Creator Economy',
+  'Hyper-Specific B2B',
+  'Parenting & Family',
+  'Fitness & Biohacking',
+  'Personal Finance',
+  'Relationships & Dating',
+  'SaaS & Micro-Startups',
+  'Digital Nomad / Travel'
+];
+
+export const MOCK_GENERATED_IDEAS: Idea[] = [
+  {
+    id: '1',
+    title: 'The Script Book: 50 Gentle Parenting Phrases for De-Escalating Toddler Tantrums',
+    description: 'Moves away from parenting theory and provides exact word-for-word scripts for specific high-stress scenarios like grocery store meltdowns and bedtime resistance.',
+    audience: 'Parents of children aged 2-5 seeking practical communication tools for respectful discipline.',
+    difficulty: 'Easy',
+    interest: 'High Interest',
+    competition: 'Med Competition',
+    trend: 'Rising',
+    searchVolume: 18000,
+    opportunityScore: 85,
+    exampleQueries: ['what to say when toddler hits', 'gentle parenting scripts for tantrums', 'how to de-escalate a 3 year old'],
+    monetizationAngles: ['Printable fridge cheat-sheet upsell', 'Audiobook version for busy moms'],
+    dateGenerated: new Date().toISOString()
+  },
+  {
+    id: '2',
+    title: 'The Neuro-Inclusive Routine Map: Visual Daily Schedules for Kids with ADHD and Autism',
+    description: 'A collection of high-contrast, customizable visual aids and printable tokens designed specifically for executive dysfunction and sensory needs.',
+    audience: 'Parents of neurodivergent children who struggle with transitions and daily living tasks.',
+    difficulty: 'Medium',
+    interest: 'High Interest',
+    competition: 'Med Competition',
+    trend: 'Rising',
+    searchVolume: 12500,
+    opportunityScore: 92,
+    exampleQueries: ['visual schedule adhd morning', 'autism transition visual aids printable', 'executive function daily routine chart'],
+    monetizationAngles: ['Canva template bundle', 'Laminating & velcro physical kit drop-shipping'],
+    dateGenerated: new Date().toISOString()
+  },
+  {
+    id: '3',
+    title: 'The Digital Handshake: A Collaborative Family Contract for Healthy Screen Time',
+    description: 'A fill-in-the-blank legal-style \'contract\' that involves children in the rule-making process to increase compliance and digital literacy.',
+    audience: 'Parents of school-aged children (6-12) and pre-teens navigating their first devices.',
+    difficulty: 'Easy',
+    interest: 'Med Interest',
+    competition: 'Low Competition',
+    trend: 'Rising',
+    searchVolume: 8500,
+    opportunityScore: 78,
+    exampleQueries: ['screen time contract for 10 year old', 'family rules for ipad use', 'how to limit screen time without fighting'],
+    monetizationAngles: ['Etsy printable download', 'Workshop webinar upsell'],
+    dateGenerated: new Date().toISOString()
+  },
+  {
+    id: '4',
+    title: 'The Calm Anchor: A 14-Day Guide to Parental Self-Regulation and Nervous System Reset',
+    description: 'Focuses entirely on the parent\'s physiology, using micro-meditations and somatic exercises to prevent \'parental rage\' and burnout.',
+    audience: 'Overwhelmed parents who feel they are constantly \'exploding\' or losing their temper.',
+    difficulty: 'Medium',
+    interest: 'High Interest',
+    competition: 'Low Competition',
+    trend: 'Rising',
+    searchVolume: 22000,
+    opportunityScore: 95,
+    exampleQueries: ['how to stop yelling at my kids', 'somatic exercises for angry moms', 'parental burnout recovery plan'],
+    monetizationAngles: ['14-day email sequence course', '1-on-1 coaching funnel'],
+    dateGenerated: new Date().toISOString()
+  },
+  {
+    id: '5',
+    title: 'Walking Pad Weight Loss for ADHD Workers',
+    description: 'A 14-day walking plan, desk setup guide, and habit stacker specifically designed for neurodivergent remote workers struggling with sedentary lifestyles.',
+    audience: 'Remote workers with ADHD looking to increase NEAT (Non-Exercise Activity Thermogenesis).',
+    difficulty: 'Easy',
+    interest: 'High Interest',
+    competition: 'Low Competition',
+    trend: 'Rising',
+    searchVolume: 15000,
+    opportunityScore: 88,
+    exampleQueries: ['walking pad adhd focus', 'how to use walking pad while working', 'desk treadmill weight loss plan'],
+    monetizationAngles: ['Amazon affiliate links for gear', 'Notion habit tracker template'],
+    dateGenerated: new Date().toISOString()
+  }
+];
