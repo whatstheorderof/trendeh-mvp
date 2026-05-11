@@ -21,7 +21,7 @@ export interface DetailedRoadmap {
   discovery: { pollQuestion: string; dmScript: string };
   blueprint: { chapters: string[] };
   pricing: { basic: string; pro: string; premium: string };
-  proposal: { launchPlan: string; emailSubject: string };
+  launch: { launchPlan: string; emailSubject: string };
   pdfGenerationGuide: {
     structure: string[];
     writingPrompt: string;
