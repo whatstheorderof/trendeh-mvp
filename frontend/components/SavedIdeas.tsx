@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Idea } from '../types';
 import { IdeaCard } from './IdeaCard';
-import { Filter, ChevronDown, Trash2, Download } from 'lucide-react';
+import { Filter, ChevronDown, Trash2, Download, Bookmark } from 'lucide-react';
 
 interface SavedIdeasProps {
   savedIdeas: Idea[];
