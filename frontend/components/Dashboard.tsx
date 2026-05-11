@@ -107,7 +107,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ savedIdeas, onNavigate, on
             <div className="space-y-4">
               {recentIdeas.map(idea => (
                 <div key={idea.id} className="bg-white border border-gray-100 rounded-2xl p-5 flex items-center justify-between shadow-sm hover:shadow-md transition-shadow group">
-                  <div className="flex-1 pr-4 cursor-pointer" onClick={() => onNavigate('saved')}>
+                  <div className="flex-1 pr-4 cursor-pointer" onClick={() => onApplyToCourse(idea)}>
                     <h4 className="font-bold text-gray-900 group-hover:text-pink-600 transition-colors line-clamp-1">{idea.title}</h4>
                     <div className="flex items-center gap-3 mt-2 text-sm text-gray-500">
                       <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> {idea.trend}</span>
