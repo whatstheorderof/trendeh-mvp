@@ -54,12 +54,12 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen p-4 md:p-8 flex items-center justify-center print:p-0 print:block print:bg-white">
+    <div className="min-h-screen p-4 md:p-8 flex items-center justify-center print:p-0 print:block print:bg-white print:min-h-0">
       {/* Main App Window */}
-      <div className="w-full max-w-[1400px] h-[90vh] bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex border border-white/40 backdrop-blur-sm print:h-auto print:shadow-none print:border-none print:rounded-none print:block">
+      <div className="w-full max-w-[1400px] h-[90vh] bg-white rounded-[2.5rem] shadow-2xl overflow-hidden flex border border-white/40 backdrop-blur-sm print:h-auto print:shadow-none print:border-none print:rounded-none print:block print:overflow-visible">
         <Sidebar currentView={currentView} setCurrentView={setCurrentView} />
         
-        <main className="flex-1 overflow-y-auto p-8 md:p-12 bg-white print:overflow-visible print:p-0">
+        <main className="flex-1 overflow-y-auto p-8 md:p-12 bg-white print:overflow-visible print:p-0 print:block print:h-auto">
           {renderContent()}
         </main>
       </div>
