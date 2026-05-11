@@ -4,9 +4,11 @@ import { Dashboard } from './components/Dashboard';
 import { GenerateIdeas } from './components/GenerateIdeas';
 import { SavedIdeas } from './components/SavedIdeas';
 import { Course } from './components/Course';
+import { Upgrade } from './components/Upgrade';
 import { ViewState, Idea } from './types';
+import { AuthProvider } from './contexts/AuthContext';
 
-const App: React.FC = () => {
+const AppContent: React.FC = () => {
   const [currentView, setCurrentView] = useState<ViewState>('dashboard');
   const [savedIdeas, setSavedIdeas] = useState<Idea[]>([]);
   const [selectedIdeaForCourse, setSelectedIdeaForCourse] = useState<Idea | null>(null);
@@ -44,6 +46,8 @@ const App: React.FC = () => {
         return <SavedIdeas savedIdeas={savedIdeas} onRemoveIdea={handleRemoveIdea} onApplyToCourse={handleApplyToCourse} />;
       case 'course':
         return <Course selectedIdea={selectedIdeaForCourse} onSelectIdea={() => setCurrentView('saved')} />;
+      case 'upgrade':
+        return <Upgrade />;
       default:
         return <Dashboard savedIdeas={savedIdeas} onNavigate={setCurrentView} onApplyToCourse={handleApplyToCourse} />;
     }
@@ -60,6 +64,14 @@ const App: React.FC = () => {
         </main>
       </div>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
