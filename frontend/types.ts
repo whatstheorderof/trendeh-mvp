@@ -22,6 +22,17 @@ export interface DetailedRoadmap {
   blueprint: { chapters: string[] };
   pricing: { basic: string; pro: string; premium: string };
   proposal: { launchPlan: string; emailSubject: string };
+  pdfGenerationGuide: {
+    structure: string[];
+    writingPrompt: string;
+    toolRecommendations: string[];
+  };
+  pdfCoverGuide: {
+    visualConcept: string;
+    colorPalette: string[];
+    fontPairing: string;
+    canvaKeywords: string[];
+  };
 }
 
-export type ViewState = 'dashboard' | 'generate' | 'saved' | 'course';
+export type ViewState = 'dashboard' | 'generate' | 'saved' | 'course' | 'upgrade';
