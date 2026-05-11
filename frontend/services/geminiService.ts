@@ -13,11 +13,11 @@ export const generateIdeas = async (topic: string, niche: string, count: number)
     Target Niche: ${niche}
     Specific Topic/Problem: ${topic || 'General trending problems in this niche'}
     
-    Use Google Search to analyze current trends, Reddit pain points, TikTok/YouTube momentum, and SEO keyword difficulty gaps.
-    Find exactly ${count} highly profitable PDF guide ideas that solve specific, urgent problems.
+    CRITICAL INSTRUCTION: You MUST use the Google Search tool to explicitly query "Google Trends ${niche}", recent breakout searches, Reddit pain points, and TikTok/YouTube momentum. 
+    Do not guess. Use live data to find exactly ${count} highly profitable PDF guide ideas that solve specific, urgent problems.
     
     Score them based on:
-    - Search Volume (Demand)
+    - Search Volume (Demand - based on your live search)
     - Competition (Market gap)
     - Purchase Intent (Monetization potential)
     
@@ -81,6 +81,7 @@ export const generateIdeaRoadmap = async (idea: Idea): Promise<DetailedRoadmap> 
     Audience: ${idea.audience}
     
     Generate a detailed 7-stage execution roadmap to take this from idea to $10K in revenue.
+    Also, provide a PDF Generation Guide and a PDF Cover Design Guide.
     Be highly specific, actionable, and creative.
   `;
 
@@ -140,6 +141,23 @@ export const generateIdeaRoadmap = async (idea: Idea): Promise<DetailedRoadmap> 
               properties: {
                 launchPlan: { type: Type.STRING, description: "A 2-sentence launch strategy" },
                 emailSubject: { type: Type.STRING, description: "A high-open-rate subject line for the launch email" }
+              }
+            },
+            pdfGenerationGuide: {
+              type: Type.OBJECT,
+              properties: {
+                structure: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Step-by-step structure for the PDF content" },
+                writingPrompt: { type: Type.STRING, description: "A master prompt to feed into an AI to write the content" },
+                toolRecommendations: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Tools to use for formatting (e.g., Canva, Notion)" }
+              }
+            },
+            pdfCoverGuide: {
+              type: Type.OBJECT,
+              properties: {
+                visualConcept: { type: Type.STRING, description: "Description of the cover's visual layout and imagery" },
+                colorPalette: { type: Type.ARRAY, items: { type: Type.STRING }, description: "3-4 hex codes (e.g., #FF5733)" },
+                fontPairing: { type: Type.STRING, description: "Suggested font pairing (e.g., Playfair Display + Inter)" },
+                canvaKeywords: { type: Type.ARRAY, items: { type: Type.STRING }, description: "Keywords to search in Canva for templates/elements" }
               }
             }
           }
