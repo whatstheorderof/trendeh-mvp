@@ -131,7 +131,7 @@ export const IdeaCard: React.FC<IdeaCardProps> = ({ idea, onSave, isSaved, onApp
             className="w-full py-3 bg-gradient-to-r from-gray-900 to-gray-800 hover:from-black hover:to-gray-900 text-white rounded-xl font-bold flex items-center justify-center gap-2 transition-all shadow-sm hover:shadow-md"
           >
             <GraduationCap className="w-5 h-5" />
-            Apply to 10K Stack
+            Apply to PDF Pipeline
           </button>
         </div>
       )}
