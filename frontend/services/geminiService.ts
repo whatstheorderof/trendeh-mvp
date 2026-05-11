@@ -88,23 +88,42 @@ export const generateIdeas = async (topic: string, niche: string, count: number)
 };
 
 export const generateIdeaRoadmap = async (idea: Idea): Promise<DetailedRoadmap> => {
-  const prompt = `
-    You are an expert digital product strategist and copywriter. 
-    I have a validated PDF guide idea:
-    
-    Title: ${idea.title}
-    Description: ${idea.description}
-    Audience: ${idea.audience}
-    
-    Generate a detailed 7-stage execution roadmap to take this from idea to a profitable launch.
-    Also, provide a PDF Generation Guide and a PDF Cover Design Guide.
-    Be highly specific, actionable, and creative.
-  `;
-
   try {
-    const response = await ai.models.generateContent({
+    // Step 1: Live Research for the specific idea
+    const researchPrompt = `
+      Research current market trends, successful product launches, and pricing strategies for a digital product (PDF guide) about: "${idea.title}".
+      Target Audience: ${idea.audience}
+      Description: ${idea.description}
+      Use Google Search to find real-world examples of similar products, what platforms they are marketed on, and what price points work.
+      Summarize the findings.
+    `;
+
+    const researchResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: prompt,
+      contents: researchPrompt,
+      config: { tools: [{ googleSearch: {} }] },
+    });
+
+    const researchData = researchResponse.text;
+
+    // Step 2: Format into the DetailedRoadmap JSON
+    const formatPrompt = `
+      Based on the following market research and the original idea, generate a detailed 7-stage execution roadmap to take this from idea to a profitable launch.
+      Also, provide a PDF Generation Guide and a PDF Cover Design Guide.
+      Be highly specific, actionable, and creative.
+      
+      Original Idea:
+      Title: ${idea.title}
+      Description: ${idea.description}
+      Audience: ${idea.audience}
+      
+      Market Research:
+      ${researchData}
+    `;
+
+    const formatResponse = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: formatPrompt,
       config: {
         responseMimeType: 'application/json',
         responseSchema: {
@@ -181,10 +200,53 @@ export const generateIdeaRoadmap = async (idea: Idea): Promise<DetailedRoadmap> 
       }
     });
 
-    const text = response.text || '{}';
+    const text = formatResponse.text || '{}';
     return JSON.parse(text) as DetailedRoadmap;
   } catch (error) {
     console.error("Error generating roadmap from Gemini:", error);
-    throw new Error("Failed to generate roadmap.");
+    console.warn("Falling back to mock roadmap data due to API error.");
+    
+    // Fallback mock data for Vercel deployments without API keys
+    return {
+      niche: { 
+        avatar: "Busy professional struggling to implement the core concept of the guide.", 
+        deepPain: ["Feeling overwhelmed by scattered information", "Lacking a clear, step-by-step execution plan"] 
+      },
+      opportunity: { 
+        gap: "Most existing resources are too theoretical and lack actionable templates.", 
+        angle: "A purely actionable, fill-in-the-blank system that guarantees results in 14 days." 
+      },
+      outreach: { 
+        platforms: ["Twitter / X", "LinkedIn", "Niche Subreddits"], 
+        hooks: ["Stop wasting hours on [Problem]. Here is the exact system I use...", "The 5-minute trick to solve [Problem] forever..."] 
+      },
+      discovery: { 
+        pollQuestion: "What is your biggest hurdle when trying to achieve [Goal]?", 
+        dmScript: "Hey! Saw your vote on the poll. I'm actually putting together a free resource on this. What's the main thing holding you back right now?" 
+      },
+      blueprint: { 
+        chapters: ["The Foundation & Mindset", "The Core Framework", "Step-by-Step Execution", "Common Pitfalls to Avoid", "Scaling Your Results"] 
+      },
+      pricing: { 
+        basic: "$19 - Core PDF Guide", 
+        pro: "$49 - PDF + Notion Templates + Checklists", 
+        premium: "$149 - Everything + 30 Min Strategy Call" 
+      },
+      launch: { 
+        launchPlan: "Tease the product for 3 days on social media sharing behind-the-scenes. Launch with a 48-hour early bird discount to your email list.", 
+        emailSubject: "The system that saved me 10 hours a week (Now Available)" 
+      },
+      pdfGenerationGuide: { 
+        structure: ["Introduction & Hook", "The Core Concept Explained", "Actionable Steps 1-5", "Worksheets/Templates", "Conclusion & Upsell"], 
+        writingPrompt: `Write a comprehensive, highly actionable guide about ${idea.title}. Use short paragraphs, bullet points, and a direct, encouraging tone. Focus on solving the problem for ${idea.audience}.`, 
+        toolRecommendations: ["Canva (for layout)", "Notion (for drafting)", "Grammarly (for editing)"] 
+      },
+      pdfCoverGuide: { 
+        visualConcept: "Minimalist, bold typography with a single striking abstract shape or icon in the center.", 
+        colorPalette: ["#111827", "#ec4899", "#f9fafb"], 
+        fontPairing: "Playfair Display (Headers) + Inter (Body)", 
+        canvaKeywords: ["Minimalist eBook Cover", "Modern Corporate", "Abstract Shapes"] 
+      }
+    };
   }
 };
