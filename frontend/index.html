@@ -97,11 +97,22 @@
       }
       html, body, #root {
         height: auto !important;
+        min-height: auto !important;
         overflow: visible !important;
         background: white !important;
         color: black !important;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
+      }
+      /* Force all flex/grid containers that might restrict height to block */
+      .print\:block {
+        display: block !important;
+      }
+      .print\:h-auto {
+        height: auto !important;
+      }
+      .print\:overflow-visible {
+        overflow: visible !important;
       }
       /* Hide scrollbars when printing */
       ::-webkit-scrollbar {
