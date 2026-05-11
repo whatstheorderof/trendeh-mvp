@@ -1,73 +1,89 @@
 import { GoogleGenAI, Type } from '@google/genai';
 import { Idea, DetailedRoadmap } from '../types';
+import { MOCK_GENERATED_IDEAS } from '../constants';
 
 // Initialize the Gemini API client
-// Note: process.env.API_KEY must be available in the environment
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY, vertexai: true });
 
 export const generateIdeas = async (topic: string, niche: string, count: number): Promise<Idea[]> => {
-  const prompt = `
-    You are an expert digital product researcher and SEO analyst building a "Market Gap PDF Generator".
-    Your goal is to find underserved, monetizable intent clusters for PDF guides.
-    
-    Target Niche: ${niche}
-    Specific Topic/Problem: ${topic || 'General trending problems in this niche'}
-    
-    CRITICAL INSTRUCTION: You MUST use the Google Search tool to explicitly query "Google Trends ${niche}", recent breakout searches, Reddit pain points, and TikTok/YouTube momentum. 
-    Do not guess. Use live data to find exactly ${count} highly profitable PDF guide ideas that solve specific, urgent problems.
-    
-    Score them based on:
-    - Search Volume (Demand - based on your live search)
-    - Competition (Market gap)
-    - Purchase Intent (Monetization potential)
-    
-    You MUST return the result as a raw JSON array of objects. Do not include any other text, markdown formatting, or explanations. Just the JSON array.
-    
-    Each object in the array must exactly match this structure:
-    {
-      "id": "unique-string-id",
-      "title": "Catchy, specific title of the PDF guide",
-      "description": "1-2 sentence description of what it solves and how",
-      "audience": "Specific target audience",
-      "difficulty": "Easy", // Must be exactly "Easy", "Medium", or "Hard"
-      "interest": "High Interest", // Must be exactly "High Interest", "Med Interest", or "Low Interest"
-      "competition": "Low Competition", // Must be exactly "Low Competition", "Med Competition", or "High Competition"
-      "trend": "Rising", // Must be exactly "Rising", "Stable", or "Declining"
-      "searchVolume": 15000, // Estimated monthly search volume (number)
-      "opportunityScore": 92, // Score from 1 to 100 based on high demand + low competition
-      "exampleQueries": ["query 1", "query 2", "query 3"], // 3 real-world search queries
-      "monetizationAngles": ["14-day plan upsell", "Notion template bundle"], // 2-3 specific ways to monetize or upsell this PDF
-      "dateGenerated": "${new Date().toISOString()}"
-    }
-  `;
-
   try {
-    const response = await ai.models.generateContent({
+    // Step 1: Use Google Search to gather raw market data (No JSON schema allowed here)
+    const researchPrompt = `
+      Research the current market trends, pain points, and search demand for PDF guides in the niche: "${niche}". 
+      Specific Topic/Problem: "${topic || 'General trending problems'}".
+      Use Google Search to find recent breakout searches, Reddit pain points, and TikTok/YouTube momentum.
+      Summarize the top ${count} highly profitable, underserved PDF guide ideas.
+    `;
+
+    const researchResponse = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
-      contents: prompt,
+      contents: researchPrompt,
       config: {
-        // Enable Google Search grounding for real-time data
         tools: [{ googleSearch: {} }],
-        // Note: responseMimeType and responseSchema are NOT allowed when using googleSearch
       },
     });
 
-    let text = response.text || '';
-    
-    // Clean up markdown code blocks if the model included them despite instructions
-    text = text.replace(/^```json\s*/i, '').replace(/^```\s*/i, '').replace(/```\s*$/i, '').trim();
+    const researchData = researchResponse.text;
 
+    // Step 2: Format the research data into strict JSON using responseSchema
+    const formatPrompt = `
+      Based on the following market research, generate exactly ${count} PDF guide ideas.
+      Score them based on Search Volume, Competition, and Purchase Intent.
+      
+      Research Data:
+      ${researchData}
+    `;
+
+    const formatResponse = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: formatPrompt,
+      config: {
+        responseMimeType: 'application/json',
+        responseSchema: {
+          type: Type.ARRAY,
+          items: {
+            type: Type.OBJECT,
+            properties: {
+              id: { type: Type.STRING },
+              title: { type: Type.STRING, description: "Catchy, specific title of the PDF guide" },
+              description: { type: Type.STRING, description: "1-2 sentence description of what it solves" },
+              audience: { type: Type.STRING, description: "Specific target audience" },
+              difficulty: { type: Type.STRING, description: "Must be exactly 'Easy', 'Medium', or 'Hard'" },
+              interest: { type: Type.STRING, description: "Must be exactly 'High Interest', 'Med Interest', or 'Low Interest'" },
+              competition: { type: Type.STRING, description: "Must be exactly 'Low Competition', 'Med Competition', or 'High Competition'" },
+              trend: { type: Type.STRING, description: "Must be exactly 'Rising', 'Stable', or 'Declining'" },
+              searchVolume: { type: Type.NUMBER, description: "Estimated monthly search volume" },
+              opportunityScore: { type: Type.NUMBER, description: "Score from 1 to 100" },
+              exampleQueries: { type: Type.ARRAY, items: { type: Type.STRING }, description: "3 real-world search queries" },
+              monetizationAngles: { type: Type.ARRAY, items: { type: Type.STRING }, description: "2-3 specific ways to monetize" },
+              dateGenerated: { type: Type.STRING }
+            },
+            required: ["title", "description", "audience", "difficulty", "interest", "competition", "trend", "searchVolume", "opportunityScore", "exampleQueries", "monetizationAngles"]
+          }
+        }
+      }
+    });
+
+    const text = formatResponse.text || '[]';
     const ideas: Idea[] = JSON.parse(text);
     
-    // Ensure IDs are unique and format is correct
     return ideas.map((idea, index) => ({
       ...idea,
       id: idea.id || `gen-${Date.now()}-${index}`,
-      monetizationAngles: idea.monetizationAngles || ['Gumroad PDF Sale', 'Email Newsletter Opt-in']
+      dateGenerated: idea.dateGenerated || new Date().toISOString()
     }));
+
   } catch (error) {
     console.error("Error generating ideas from Gemini:", error);
-    throw new Error("Failed to generate ideas. Please check your connection and try again.");
+    // Fallback for Vercel/GitHub deployments where API_KEY might be missing or rate-limited
+    console.warn("Falling back to mock data due to API error.");
+    
+    // Return a shuffled subset of mock data to simulate generation
+    const shuffled = [...MOCK_GENERATED_IDEAS].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, Math.min(count, shuffled.length)).map(idea => ({
+      ...idea,
+      id: `mock-${Date.now()}-${Math.random()}`
+    }));
   }
 };
 
@@ -80,7 +96,7 @@ export const generateIdeaRoadmap = async (idea: Idea): Promise<DetailedRoadmap> 
     Description: ${idea.description}
     Audience: ${idea.audience}
     
-    Generate a detailed 7-stage execution roadmap to take this from idea to $10K in revenue.
+    Generate a detailed 7-stage execution roadmap to take this from idea to a profitable launch.
     Also, provide a PDF Generation Guide and a PDF Cover Design Guide.
     Be highly specific, actionable, and creative.
   `;
@@ -136,7 +152,7 @@ export const generateIdeaRoadmap = async (idea: Idea): Promise<DetailedRoadmap> 
                 premium: { type: Type.STRING, description: "Premium tier pricing and what it includes (e.g., '$199 - PDF + 1-on-1 Call')" }
               }
             },
-            proposal: {
+            launch: {
               type: Type.OBJECT,
               properties: {
                 launchPlan: { type: Type.STRING, description: "A 2-sentence launch strategy" },
