@@ -9,10 +9,28 @@ export const NICHES = [
   'Hyper-Specific B2B',
   'Parenting & Family',
   'Fitness & Biohacking',
-  'Personal Finance',
+  'Personal Finance & Investing',
   'Relationships & Dating',
   'SaaS & Micro-Startups',
-  'Digital Nomad / Travel'
+  'Digital Nomad / Travel',
+  'Real Estate & Property Investing',
+  'E-commerce & Dropshipping',
+  'Web3 & Crypto Trading',
+  'Holistic Health & Alternative Medicine',
+  'Productivity & Notion Systems',
+  'Language Learning & Relocation',
+  'Pet Training & Care',
+  'Sustainable Living & Homesteading',
+  'Event Planning & Wedding Coordination',
+  'Freelancing & Agency Building',
+  'UI/UX Design & Web Development',
+  'Music Production & Beat Selling',
+  'Photography & Videography',
+  'Astrology & Spirituality',
+  'Gaming & Esports Coaching',
+  'DIY Crafts & Woodworking',
+  'Beauty, Skincare & Anti-Aging',
+  'Local Lead Generation & Local SEO'
 ];
 
 export const MOCK_GENERATED_IDEAS: Idea[] = [
